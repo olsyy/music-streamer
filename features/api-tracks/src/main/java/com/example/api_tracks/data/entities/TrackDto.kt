@@ -9,5 +9,5 @@ data class TrackDto(
     val id: Long,
     val title: String,
     val artist: ArtistDto,
-//    val cover: String?,
+    val md5_image: String?,
 )

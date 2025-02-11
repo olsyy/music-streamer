@@ -28,7 +28,10 @@ class ApiTracksViewModel @Inject constructor(
     }
 
     fun loadTracks() = viewModelScope.launch {
-        _tracks.value = Loading
         _tracks.value = getTracksUseCase()
+    }
+
+    fun searchTracks(query: String) = viewModelScope.launch {
+        _tracks.value = searchTracksUseCase(query)
     }
 }

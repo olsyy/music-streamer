@@ -26,4 +26,4 @@ include(":features")
 include(":features:downloaded-tracks")
 include(":features:api-tracks")
 include(":features:playback")
- 
+include(":shared_ui")
