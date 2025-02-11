@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MusicStreamer</string>
+    <string name="api_tracks_ic_title">Api tracks</string>
+    <string name="downloaded_tracks_ic_title">Downloaded tracks</string>
 </resources>

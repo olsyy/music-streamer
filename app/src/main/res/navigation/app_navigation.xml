@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/app_navigation"
+    app:startDestination="@id/menuApiTracks">
+
+    <fragment
+        android:id="@+id/menuApiTracks"
+        android:name="com.example.api_tracks.ApiTracksFragment">
+        <action
+            android:id="@+id/action_menuApiTracks_to_menuDownloadedTracks"
+            app:destination="@id/menuDownloadedTracks" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/menuDownloadedTracks"
+        android:name="com.example.downloaded_tracks.DownloadedTracksFragment">
+        <action
+            android:id="@+id/action_menuDownloadedTracks_to_menuApiTracks"
+            app:destination="@id/menuApiTracks" />
+    </fragment>
+
+</navigation>
