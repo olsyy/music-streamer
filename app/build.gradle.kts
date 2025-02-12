@@ -47,9 +47,9 @@ kapt {
 dependencies {
     // Modules
     implementation(project(":core"))
-    implementation(project(":features:downloaded-tracks"))
-    implementation(project(":features:api-tracks"))
-    implementation(project(":features:playback"))
+    implementation(project(":domain"))
+    implementation(project(":presentation"))
+    implementation(project(":data"))
 
     // Navigation
     implementation(libs.androidx.navigation.fragment)

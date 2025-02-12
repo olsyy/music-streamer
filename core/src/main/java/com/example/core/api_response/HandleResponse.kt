@@ -1,5 +1,7 @@
 package com.example.core.api_response
 
+import android.util.Log
+import okhttp3.internal.platform.android.AndroidLog
 import retrofit2.HttpException
 import retrofit2.Response
 
@@ -11,6 +13,7 @@ suspend fun <T : Any, R : Any> handleApi(
         val response = execute()
         val body = response.body()
         if (response.isSuccessful && body != null) {
+            Log.d("TAGsTracks", "handleApi: $body")
             Success(transform(body))
         } else {
             Error(

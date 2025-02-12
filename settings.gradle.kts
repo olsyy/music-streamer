@@ -22,8 +22,6 @@ dependencyResolutionManagement {
 rootProject.name = "MusicStreamer"
 include(":app")
 include(":core")
-include(":features")
-include(":features:downloaded-tracks")
-include(":features:api-tracks")
-include(":features:playback")
-include(":shared_ui")
+include(":data")
+include(":presentation")
+include(":domain")
