@@ -10,8 +10,6 @@ import javax.inject.Inject
 @HiltViewModel
 class DownloadedTracksViewModel @Inject constructor(): BaseViewModel() {
 
-
     override fun loadTracks() = viewModelScope.launch {}
-
     override fun searchTracks(query: String) = viewModelScope.launch {}
 }

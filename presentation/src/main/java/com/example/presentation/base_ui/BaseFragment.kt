@@ -68,7 +68,6 @@ abstract class BaseFragment<VM : BaseViewModel> : Fragment() {
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 if (newText.isNullOrEmpty()) {
-                    Log.d(TAG, "Search close")
                     viewModel.loadTracks()
                 }
                 return true
@@ -82,7 +81,6 @@ abstract class BaseFragment<VM : BaseViewModel> : Fragment() {
                 is Success -> {
                     binding.progressBar.visibility = View.GONE
                     adapter.tracks = response.data
-                    Log.d(TAG, "Success: ${response.data}")
                     if (response.data.isEmpty()) {
                         Toast.makeText(
                             context,
@@ -98,12 +96,10 @@ abstract class BaseFragment<VM : BaseViewModel> : Fragment() {
 
                 is Error -> {
                     Toast.makeText(context, response.message, Toast.LENGTH_SHORT).show()
-                    Log.d(TAG, "Error: ${response.message}")
                 }
 
                 is Exception -> {
                     Toast.makeText(context, response.e.message, Toast.LENGTH_SHORT).show()
-                    Log.d(TAG, "Exception: ${response.e.message}")
                 }
             }
         }
