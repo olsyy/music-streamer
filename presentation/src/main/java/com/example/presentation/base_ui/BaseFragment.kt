@@ -67,16 +67,13 @@ abstract class BaseFragment<VM : BaseViewModel> : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText.isNullOrEmpty()) {
+                    Log.d(TAG, "Search close")
+                    viewModel.loadTracks()
+                }
                 return true
             }
         })
-
-        binding.searchView.setOnCloseListener {
-            Log.d(TAG, "Search close")
-            searchView.clearFocus()
-            viewModel.loadTracks()
-            true
-        }
     }
 
     private fun setupObservers() {
@@ -87,7 +84,11 @@ abstract class BaseFragment<VM : BaseViewModel> : Fragment() {
                     adapter.tracks = response.data
                     Log.d(TAG, "Success: ${response.data}")
                     if (response.data.isEmpty()) {
-                        Toast.makeText(context, "No tracks found for your query.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            context,
+                            "No tracks found for your query.",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
 
