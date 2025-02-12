@@ -1,6 +1,5 @@
 package com.example.data.mapper
 
-import android.util.Log
 import com.example.core.api_response.*
 import com.example.core.utils.getImageUrl
 import com.example.data.entities.ChartDtoResponse
@@ -9,15 +8,12 @@ import com.example.data.entities.TracksListDto
 import com.example.domain.entities.Track
 import com.example.domain.entities.TracksList
 
-fun TrackDto.toTrack(): Track {
-    Log.d("TAGsTracks", "toTrack: $this")
-    return Track(
-        id = id,
-        title = title,
-        artist = artist.name,
-        cover = md5_image.getImageUrl()
-    )
-}
+fun TrackDto.toTrack() = Track(
+    id = id,
+    title = title,
+    artist = artist.name,
+    cover = md5_image.getImageUrl()
+)
 
 fun TracksListDto.toListTracks() = data.map { it.toTrack() }
 

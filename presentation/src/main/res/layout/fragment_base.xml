@@ -7,6 +7,14 @@
     android:orientation="vertical"
     tools:context="com.example.presentation.base_ui.BaseFragment">
 
+<!--    <com.google.android.material.search.SearchView-->
+<!--        android:id="@+id/searchView"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:autofillHints="Search track"-->
+<!--        android:queryHint="What do you want to play?" />-->
+
+
     <SearchView
         android:id="@+id/searchView"
         android:layout_width="match_parent"

@@ -19,10 +19,6 @@ import com.example.presentation.databinding.FragmentBaseBinding
 
 abstract class BaseFragment<VM : BaseViewModel> : Fragment() {
 
-    init {
-        Log.d(TAG, "Init BaseFragment")
-    }
-
     private var _binding: FragmentBaseBinding? = null
     protected val binding: FragmentBaseBinding get() = _binding!!
 
@@ -33,7 +29,6 @@ abstract class BaseFragment<VM : BaseViewModel> : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-
         _binding = FragmentBaseBinding.inflate(inflater, container, false)
 
         setupAdapter()
@@ -47,12 +42,12 @@ abstract class BaseFragment<VM : BaseViewModel> : Fragment() {
     }
 
 
-    protected fun setupAdapter() {
+    private fun setupAdapter() {
         val recyclerView = binding.root.findViewById<RecyclerView>(R.id.recyclerViewTracks)
         recyclerView.adapter = adapter
     }
 
-    protected fun setupTrackItemListener() {
+    private fun setupTrackItemListener() {
         adapter.onTrackItemClickListener = object : RecyclerAdapter.OnTrackItemClickListener {
             override fun onTrackItemCLick(trackId: Long) {
                 Log.d(TAG, "onTrackItemCLick")
@@ -60,10 +55,14 @@ abstract class BaseFragment<VM : BaseViewModel> : Fragment() {
         }
     }
 
-    protected fun setupSearchListener() {
-        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+    private fun setupSearchListener() {
+        val searchView = binding.searchView
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                query?.let { viewModel.searchTracks(it) }
+                query?.let {
+                    viewModel.searchTracks(it)
+                    searchView.clearFocus()
+                }
                 return true
             }
 
@@ -71,14 +70,22 @@ abstract class BaseFragment<VM : BaseViewModel> : Fragment() {
                 return true
             }
         })
+
+        binding.searchView.setOnCloseListener {
+            Log.d(TAG, "Search close")
+            searchView.clearFocus()
+            viewModel.loadTracks()
+            true
+        }
     }
 
-    protected fun setupObservers() {
+    private fun setupObservers() {
         viewModel.tracks.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is Success -> {
                     binding.progressBar.visibility = View.GONE
                     adapter.tracks = response.data
+                    Log.d(TAG, "Success: ${response.data}")
                     if (response.data.isEmpty()) {
                         Toast.makeText(context, "No tracks found for your query.", Toast.LENGTH_SHORT).show()
                     }

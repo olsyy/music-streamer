@@ -19,7 +19,7 @@ class ApiTracksRepositoryImpl @Inject constructor(
         return handleApi(
             execute = {
                 val data = api.fetchTracks()
-                Log.d("TAGsTracks", "getTracks: $data")
+//                Log.d("TAGsTracks", "getTracks: $data")
                 data
             },
             transform = { tracks -> tracks.toListTracks() }
@@ -29,9 +29,9 @@ class ApiTracksRepositoryImpl @Inject constructor(
     override suspend fun searchTracks(query: String): ApiResponse<TracksList> {
         return handleApi(
             execute = {
-                Log.d("TAGsTracks", "Query: $query")
+//                Log.d("TAGsTracks", "QueryApi: $query")
                 val data = api.searchTracks(query)
-                Log.d("TAGsTracks", "getTracks: $data")
+//                Log.d("TAGsTracks", "getTracks: $data")
                 data
             },
             transform = { tracks -> tracks.toListTracks() }
