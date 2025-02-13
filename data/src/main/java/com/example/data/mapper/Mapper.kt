@@ -19,11 +19,11 @@ fun TracksListDto.toListTracks() = data.map { it.toTrack() }
 
 fun ChartDtoResponse.toListTracks(): TracksList = tracks.toListTracks()
 
-fun <T : Any, R : Any> Response<T>.map(transform: (T) -> R): Response<R> {
+fun <T : Any, R : Any> DataResponse<T>.map(transform: (T) -> R): DataResponse<R> {
     return when (this) {
         is Success -> Success(transform(this.data))
         is Error -> Error(this.code, this.message)
         is Exception -> Exception(this.e)
         is Loading -> this
-    } as Response<R>
+    } as DataResponse<R>
 }

@@ -17,7 +17,7 @@ import com.example.presentation.R
 import com.example.presentation.base_ui.recyclerView.RecyclerAdapter
 import com.example.presentation.databinding.FragmentBaseBinding
 
-abstract class BaseFragment<VM : BaseViewModel> : Fragment() {
+abstract class BaseFragment<VM : BaseViewModel<*>> : Fragment() {
 
     private var _binding: FragmentBaseBinding? = null
     protected val binding: FragmentBaseBinding get() = _binding!!
@@ -75,35 +75,7 @@ abstract class BaseFragment<VM : BaseViewModel> : Fragment() {
         })
     }
 
-    private fun setupObservers() {
-        viewModel.tracks.observe(viewLifecycleOwner) { response ->
-            when (response) {
-                is Success -> {
-                    binding.progressBar.visibility = View.GONE
-                    adapter.tracks = response.data
-                    if (response.data.isEmpty()) {
-                        Toast.makeText(
-                            context,
-                            "No tracks found for your query.",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                }
-
-                is Loading -> {
-                    binding.progressBar.visibility = View.VISIBLE
-                }
-
-                is Error -> {
-                    Toast.makeText(context, response.message, Toast.LENGTH_SHORT).show()
-                }
-
-                is Exception -> {
-                    Toast.makeText(context, response.e.message, Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-    }
+    protected abstract fun setupObservers()
 
     override fun onDestroy() {
         _binding = null
