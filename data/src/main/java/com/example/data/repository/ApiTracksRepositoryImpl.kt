@@ -1,8 +1,7 @@
 package com.example.data.repository
 
-import android.util.Log
-import com.example.core.api_response.ApiResponse
-import com.example.core.api_response.handleApi
+import com.example.core.response.Response
+import com.example.core.response.handleApi
 import com.example.data.api.DeezerApi
 import com.example.data.mapper.toListTracks
 import com.example.domain.entities.TracksList
@@ -15,7 +14,7 @@ class ApiTracksRepositoryImpl @Inject constructor(
     private val api: DeezerApi,
 ) : TracksRepository {
 
-    override suspend fun getTracks(): ApiResponse<TracksList> {
+    override suspend fun getTracks(): Response<TracksList> {
         return handleApi(
             execute = {
                 val data = api.fetchTracks()
@@ -26,7 +25,7 @@ class ApiTracksRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun searchTracks(query: String): ApiResponse<TracksList> {
+    override suspend fun searchTracks(query: String): Response<TracksList> {
         return handleApi(
             execute = {
 //                Log.d("TAGsTracks", "QueryApi: $query")

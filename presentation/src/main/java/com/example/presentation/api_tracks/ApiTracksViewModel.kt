@@ -2,7 +2,8 @@ package com.example.presentation.api_tracks
 
 import android.util.Log
 import androidx.lifecycle.viewModelScope
-import com.example.core.api_response.Loading
+import com.example.core.response.Loading
+import com.example.core.di.RemoteRepo
 import com.example.domain.usecases.GetTracksUseCase
 import com.example.domain.usecases.SearchTracksUseCase
 import com.example.presentation.base_ui.BaseViewModel
@@ -12,8 +13,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ApiTracksViewModel @Inject constructor(
-    private val getTracksUseCase: GetTracksUseCase,
-    private val searchTracksUseCase: SearchTracksUseCase,
+    @RemoteRepo private val getTracksUseCase: GetTracksUseCase,
+    @RemoteRepo private val searchTracksUseCase: SearchTracksUseCase,
 ) : BaseViewModel() {
 
     init {

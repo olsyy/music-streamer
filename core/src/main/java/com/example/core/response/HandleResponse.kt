@@ -1,14 +1,13 @@
-package com.example.core.api_response
+package com.example.core.response
 
 import android.util.Log
-import okhttp3.internal.platform.android.AndroidLog
 import retrofit2.HttpException
 import retrofit2.Response
 
 suspend fun <T : Any, R : Any> handleApi(
     execute: suspend () -> Response<T>,
     transform: (T) -> R
-): ApiResponse<R> {
+): Response<R> {
     return try {
         val response = execute()
         val body = response.body()

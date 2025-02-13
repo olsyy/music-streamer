@@ -9,10 +9,10 @@ import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import com.example.core.api_response.Error
-import com.example.core.api_response.Exception
-import com.example.core.api_response.Loading
-import com.example.core.api_response.Success
+import com.example.core.response.Error
+import com.example.core.response.Exception
+import com.example.core.response.Loading
+import com.example.core.response.Success
 import com.example.presentation.R
 import com.example.presentation.base_ui.recyclerView.RecyclerAdapter
 import com.example.presentation.databinding.FragmentBaseBinding

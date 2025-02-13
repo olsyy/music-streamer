@@ -1,6 +1,6 @@
 package com.example.data.mapper
 
-import com.example.core.api_response.*
+import com.example.core.response.*
 import com.example.core.utils.getImageUrl
 import com.example.data.entities.ChartDtoResponse
 import com.example.data.entities.TrackDto
@@ -19,11 +19,11 @@ fun TracksListDto.toListTracks() = data.map { it.toTrack() }
 
 fun ChartDtoResponse.toListTracks(): TracksList = tracks.toListTracks()
 
-fun <T : Any, R : Any> ApiResponse<T>.map(transform: (T) -> R): ApiResponse<R> {
+fun <T : Any, R : Any> Response<T>.map(transform: (T) -> R): Response<R> {
     return when (this) {
         is Success -> Success(transform(this.data))
         is Error -> Error(this.code, this.message)
         is Exception -> Exception(this.e)
         is Loading -> this
-    } as ApiResponse<R>
+    } as Response<R>
 }
