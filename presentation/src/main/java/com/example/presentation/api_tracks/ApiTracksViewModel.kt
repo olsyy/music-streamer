@@ -2,9 +2,7 @@ package com.example.presentation.api_tracks
 
 import android.util.Log
 import androidx.lifecycle.viewModelScope
-import com.example.core.response.DataResponse
-import com.example.core.response.Loading
-import com.example.domain.entities.TracksList
+import com.example.core.state.Loading
 import com.example.domain.usecases.GetTracksRemoteUseCase
 import com.example.domain.usecases.SearchTracksRemoteUseCase
 import com.example.presentation.base_ui.BaseViewModel
@@ -16,7 +14,7 @@ import javax.inject.Inject
 class ApiTracksViewModel @Inject constructor(
     private val getTracksUseCase: GetTracksRemoteUseCase,
     private val searchTracksUseCase: SearchTracksRemoteUseCase,
-) : BaseViewModel<DataResponse<TracksList>>() {
+) : BaseViewModel() {
 
     init {
         _tracks.value = Loading
@@ -28,6 +26,7 @@ class ApiTracksViewModel @Inject constructor(
 
     override fun searchTracks(query: String) = viewModelScope.launch {
         Log.d("TAGsTracks", "searchTracksQuery: $query")
+        _tracks.value = Loading
         _tracks.value = searchTracksUseCase(query)
     }
 }

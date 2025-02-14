@@ -1,20 +1,20 @@
 package com.example.data.repository
 
-import com.example.core.response.DataResponse
-import com.example.core.response.handleApi
+import com.example.core.state.ViewState
+import com.example.core.state.handleApi
 import com.example.data.api.DeezerApi
 import com.example.data.mapper.toListTracks
 import com.example.domain.entities.TracksList
-import com.example.domain.repository.RemoteDataRepository
+import com.example.domain.repository.TracksRepository
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class ApiTracksRepositoryImpl @Inject constructor(
     private val api: DeezerApi,
-) : RemoteDataRepository {
+) : TracksRepository {
 
-    override suspend fun getTracks(): DataResponse<TracksList> {
+    override suspend fun getTracks(): ViewState<TracksList> {
         return handleApi(
             execute = {
                 val data = api.fetchTracks()
@@ -24,7 +24,7 @@ class ApiTracksRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun searchTracks(query: String): DataResponse<TracksList> {
+    override suspend fun searchTracks(query: String): ViewState<TracksList> {
         return handleApi(
             execute = {
                 val data = api.searchTracks(query)

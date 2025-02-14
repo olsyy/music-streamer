@@ -1,6 +1,6 @@
 package com.example.data.di
 
-import com.example.core.constants.BASE_URL
+import com.example.core.constants.AppConstants
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
@@ -14,7 +14,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class NetworkModule {
+object NetworkModule {
 
     @Provides
     @Singleton
@@ -40,7 +40,7 @@ class NetworkModule {
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         val gson = GsonBuilder().create()
         return Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(AppConstants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .client(okHttpClient)
             .build()

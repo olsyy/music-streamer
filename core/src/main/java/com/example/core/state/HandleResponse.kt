@@ -1,4 +1,4 @@
-package com.example.core.response
+package com.example.core.state
 
 import retrofit2.HttpException
 import retrofit2.Response
@@ -6,7 +6,7 @@ import retrofit2.Response
 suspend fun <T : Any, R : Any> handleApi(
     execute: suspend () -> Response<T>,
     transform: (T) -> R
-): DataResponse<R> {
+): ViewState<R> {
     return try {
         val response = execute()
         val body = response.body()

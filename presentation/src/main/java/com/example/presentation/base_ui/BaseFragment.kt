@@ -9,15 +9,15 @@ import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import com.example.core.response.Error
-import com.example.core.response.Exception
-import com.example.core.response.Loading
-import com.example.core.response.Success
+import com.example.core.state.Error
+import com.example.core.state.Exception
+import com.example.core.state.Loading
+import com.example.core.state.Success
 import com.example.presentation.R
 import com.example.presentation.base_ui.recyclerView.RecyclerAdapter
 import com.example.presentation.databinding.FragmentBaseBinding
 
-abstract class BaseFragment<VM : BaseViewModel<*>> : Fragment() {
+abstract class BaseFragment<VM : BaseViewModel> : Fragment() {
 
     private var _binding: FragmentBaseBinding? = null
     protected val binding: FragmentBaseBinding get() = _binding!!
@@ -36,11 +36,8 @@ abstract class BaseFragment<VM : BaseViewModel<*>> : Fragment() {
         setupTrackItemListener()
         setupSearchListener()
 
-        viewModel.loadTracks()
-
         return binding.root
     }
-
 
     private fun setupAdapter() {
         val recyclerView = binding.root.findViewById<RecyclerView>(R.id.recyclerViewTracks)
@@ -75,7 +72,35 @@ abstract class BaseFragment<VM : BaseViewModel<*>> : Fragment() {
         })
     }
 
-    protected abstract fun setupObservers()
+    private fun setupObservers() {
+        viewModel.tracks.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is Success -> {
+                    binding.progressBar.visibility = View.GONE
+                    adapter.tracks = response.data
+                    if (response.data.isEmpty()) {
+                        Toast.makeText(
+                            context,
+                            "No tracks found for your query.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+
+                is Loading -> {
+                    binding.progressBar.visibility = View.VISIBLE
+                }
+
+                is Error -> {
+                    Toast.makeText(context, response.message, Toast.LENGTH_SHORT).show()
+                }
+
+                is Exception -> {
+                    Toast.makeText(context, response.e.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
 
     override fun onDestroy() {
         _binding = null
