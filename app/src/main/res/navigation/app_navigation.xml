@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/menuApiTracksFragment"
-        android:name="com.example.presentation.api_tracks.ApiTracksFragment">
+        android:name="com.example.api_tracks.ApiTracksFragment">
         <action
             android:id="@+id/action_ApiTracksFragment_to_menuDownloadedTracks"
             app:destination="@id/menuDownloadedTracks" />
@@ -14,7 +14,7 @@
 
     <fragment
         android:id="@+id/menuDownloadedTracks"
-        android:name="com.example.presentation.downloaded_tracks.DownloadedTracksFragment">
+        android:name="com.example.downloaded_tracks.DownloadedTracksFragment">
         <action
             android:id="@+id/action_menuDownloadedTracks_to_ApiTracksFragment"
             app:destination="@id/menuApiTracksFragment" />

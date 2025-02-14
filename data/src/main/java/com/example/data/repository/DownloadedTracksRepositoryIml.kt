@@ -3,7 +3,7 @@ package com.example.data.repository
 import android.content.Context
 import android.provider.MediaStore
 import com.example.core.state.ViewState
-import com.example.data.utils.MediaStoreHelper
+import com.example.data.music_store_helper.MediaStoreHelper
 import com.example.domain.entities.TracksList
 import com.example.domain.repository.TracksRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -28,7 +28,6 @@ class DownloadedTracksRepositoryIml @Inject constructor(
         return MediaStoreHelper.getTracks(
             context,
             selection = selection,
-            query = query,
             selectionArgs = selectionArgs
         )
     }

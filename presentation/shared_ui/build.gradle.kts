@@ -6,8 +6,8 @@ plugins {
 }
 
 android {
-    namespace = "com.example.data"
-    compileSdk = 34
+    namespace = "com.example.shared_ui"
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 24
@@ -32,40 +32,44 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+    buildFeatures {
+        viewBinding = true
+    }
 }
+
 kapt {
     correctErrorTypes = true
 }
+
 dependencies {
 
-    implementation(project(":domain"))
     // Modules
     implementation(project(":core"))
-
-    // Serialization
-    implementation(libs.kotlinx.serialization.json)
+    implementation(project(":domain"))
 
     // Retrofit
     implementation(libs.retrofit)
+
+    // Glide
+    implementation (libs.glide)
 
     // DI
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
 
-    // Glide
-    implementation (libs.glide)
-
-    // OkHttp
-    implementation(libs.okhttp)
-
-    //Gson
-    implementation(libs.gson)
-    implementation (libs.converter.gson)
+    // Serialization
     implementation(libs.kotlinx.serialization.json)
 
+    // Lifecycle
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.fragment.ktx)
+
+    // UI
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
+
+    // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

@@ -1,13 +1,11 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    id("kotlin-kapt")
-    id("com.google.dagger.hilt.android")
 }
 
 android {
-    namespace = "com.example.data"
-    compileSdk = 34
+    namespace = "com.example.playback"
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 24
@@ -33,35 +31,8 @@ android {
         jvmTarget = "11"
     }
 }
-kapt {
-    correctErrorTypes = true
-}
+
 dependencies {
-
-    implementation(project(":domain"))
-    // Modules
-    implementation(project(":core"))
-
-    // Serialization
-    implementation(libs.kotlinx.serialization.json)
-
-    // Retrofit
-    implementation(libs.retrofit)
-
-    // DI
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.android.compiler)
-
-    // Glide
-    implementation (libs.glide)
-
-    // OkHttp
-    implementation(libs.okhttp)
-
-    //Gson
-    implementation(libs.gson)
-    implementation (libs.converter.gson)
-    implementation(libs.kotlinx.serialization.json)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

@@ -48,8 +48,9 @@ dependencies {
     // Modules
     implementation(project(":core"))
     implementation(project(":domain"))
-    implementation(project(":presentation"))
     implementation(project(":data"))
+    implementation(project(":presentation:api_tracks"))
+    implementation(project(":presentation:downloaded_tracks"))
 
     // Navigation
     implementation(libs.androidx.navigation.fragment)
