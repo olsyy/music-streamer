@@ -7,11 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.example.core.state.Empty
 import com.example.core.state.Error
 import com.example.core.state.Exception
 import com.example.core.state.Loading
+import com.example.core.state.PlaybackSource
 import com.example.core.state.Success
 import com.example.shared_ui.databinding.FragmentBaseBinding
 import com.example.shared_ui.recyclerView.RecyclerAdapter
@@ -34,6 +38,7 @@ abstract class BaseFragment<VM : BaseViewModel> : Fragment() {
         setupObservers()
         setupTrackItemListener()
         setupSearchListener()
+        Log.d("BaseFragmentS", "Init BaseFragment")
 
         return binding.root
     }
@@ -46,10 +51,23 @@ abstract class BaseFragment<VM : BaseViewModel> : Fragment() {
     private fun setupTrackItemListener() {
         adapter.onTrackItemClickListener = object : RecyclerAdapter.OnTrackItemClickListener {
             override fun onTrackItemCLick(trackId: Long) {
-                Log.d(TAG, "onTrackItemCLick")
+                val playbackSource = getPlaybackSource()
+                val allTracks = ArrayList(adapter.tracks)
+                val navArgs = bundleOf(
+                    "trackId" to trackId,
+                    "playbackSource" to playbackSource.name,
+                    "allTracks" to allTracks,
+                )
+
+                findNavController().navigate(
+                    com.example.navigation.R.id.playbackFragment,
+                    navArgs
+                )
             }
         }
     }
+
+    protected abstract fun getPlaybackSource(): PlaybackSource
 
     private fun setupSearchListener() {
         val searchView = binding.searchView
@@ -97,6 +115,8 @@ abstract class BaseFragment<VM : BaseViewModel> : Fragment() {
                 is Exception -> {
                     Toast.makeText(context, response.e.message, Toast.LENGTH_SHORT).show()
                 }
+
+                is Empty -> {}
             }
         }
     }

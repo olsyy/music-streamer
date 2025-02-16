@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
+import com.example.core.state.PlaybackSource
 import com.example.shared_ui.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -38,6 +39,8 @@ class DownloadedTracksFragment : BaseFragment<DownloadedTracksViewModel>() {
         }
         requestPermissionLauncher.launch(permission)
     }
+
+    override fun getPlaybackSource() = PlaybackSource.LOCAL
 
     override fun onDestroy() {
         Log.d("DownloadedTracksFragmentS", "Fragment downloaded tracks is destroyed")

@@ -1,7 +1,8 @@
 package com.example.data.di
 
 
-import com.example.data.api.DeezerApi
+import com.example.data.api.MusicApiService
+import com.example.data.api.PlaybackApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,7 +16,13 @@ object ApiModule {
 
     @Provides
     @Singleton
-    fun provideApiTracksApi(retrofit: Retrofit): DeezerApi {
-        return retrofit.create(DeezerApi::class.java)
+    fun provideMusicApi(retrofit: Retrofit): MusicApiService {
+        return retrofit.create(MusicApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun providePlaybackApi(retrofit: Retrofit): PlaybackApiService {
+        return retrofit.create(PlaybackApiService::class.java)
     }
 }

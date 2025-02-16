@@ -1,8 +1,7 @@
 package com.example.data.entities
 
+import android.net.Uri
 import kotlinx.serialization.Serializable
-
-internal typealias ListTracksDto = List<TrackDto>
 
 @Serializable
 data class TrackDto(
@@ -10,4 +9,5 @@ data class TrackDto(
     val title: String,
     val artist: ArtistDto,
     val md5_image: String?,
+    val preview: String?,
 )

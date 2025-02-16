@@ -49,6 +49,7 @@ dependencies {
     implementation(project(":core"))
     implementation(project(":domain"))
     implementation(project(":data"))
+    implementation(project(":presentation:main"))
     implementation(project(":presentation:api_tracks"))
     implementation(project(":presentation:downloaded_tracks"))
 

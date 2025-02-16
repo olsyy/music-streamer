@@ -2,7 +2,7 @@ package com.example.data.repository
 
 import com.example.core.state.ViewState
 import com.example.core.state.handleApi
-import com.example.data.api.DeezerApi
+import com.example.data.api.MusicApiService
 import com.example.data.mapper.toListTracks
 import com.example.domain.entities.TracksList
 import com.example.domain.repository.TracksRepository
@@ -11,7 +11,7 @@ import javax.inject.Singleton
 
 @Singleton
 class ApiTracksRepositoryImpl @Inject constructor(
-    private val api: DeezerApi,
+    private val api: MusicApiService,
 ) : TracksRepository {
 
     override suspend fun getTracks(): ViewState<TracksList> {

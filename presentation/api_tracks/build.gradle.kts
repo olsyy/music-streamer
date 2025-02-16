@@ -53,6 +53,10 @@ dependencies {
     // Glide
     implementation (libs.glide)
 
+    // Navigation
+    implementation(libs.androidx.navigation.fragment)
+    implementation(libs.androidx.navigation.ui)
+
     // DI
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)

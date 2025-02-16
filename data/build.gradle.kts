@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
+    kotlin("plugin.serialization") version "2.0.21"
 }
 
 android {
@@ -38,9 +39,9 @@ kapt {
 }
 dependencies {
 
-    implementation(project(":domain"))
     // Modules
     implementation(project(":core"))
+    implementation(project(":domain"))
 
     // Serialization
     implementation(libs.kotlinx.serialization.json)

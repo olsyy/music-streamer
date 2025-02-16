@@ -10,6 +10,10 @@
         <action
             android:id="@+id/action_ApiTracksFragment_to_menuDownloadedTracks"
             app:destination="@id/menuDownloadedTracks" />
+        <action
+            android:id="@+id/action_ApiTracksFragment_to_playbackFragment"
+            app:destination="@id/playbackFragment"
+            app:launchSingleTop="true" />
     </fragment>
 
     <fragment
@@ -17,7 +21,16 @@
         android:name="com.example.downloaded_tracks.DownloadedTracksFragment">
         <action
             android:id="@+id/action_menuDownloadedTracks_to_ApiTracksFragment"
-            app:destination="@id/menuApiTracksFragment" />
+            app:destination="@id/menuApiTracksFragment"/>
+        <action
+            android:id="@+id/action_menuDownloadedTracks_to_playbackFragment"
+            app:destination="@id/playbackFragment"
+            app:launchSingleTop="true"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/playbackFragment"
+        android:name="com.example.playback.PlaybackFragment">
     </fragment>
 
 </navigation>

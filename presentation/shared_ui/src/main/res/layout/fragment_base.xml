@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.presentation.base_ui.BaseFragment">
+    tools:context="com.example.shared_ui.BaseFragment">
 
     <SearchView
         android:id="@+id/searchView"
@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:indeterminateTint="@android:color/black"
+            android:indeterminateTint="?attr/colorPrimary"
             android:visibility="gone" />
 
         <androidx.recyclerview.widget.RecyclerView

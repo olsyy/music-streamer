@@ -46,12 +46,19 @@ dependencies {
     // Modules
     implementation(project(":core"))
     implementation(project(":domain"))
+    implementation(project(":presentation:playback"))
+    implementation(project(":navigation"))
 
     // Retrofit
     implementation(libs.retrofit)
 
     // Glide
     implementation (libs.glide)
+
+    // Navigation
+    implementation(libs.androidx.navigation.fragment)
+    implementation(libs.androidx.navigation.ui)
+
 
     // DI
     implementation(libs.hilt.android)
