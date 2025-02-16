@@ -3,7 +3,6 @@ package com.example.downloaded_tracks
 import android.Manifest
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -31,7 +30,6 @@ class DownloadedTracksFragment : BaseFragment<DownloadedTracksViewModel>() {
             ActivityResultContracts.RequestPermission()
         ) { isGranted: Boolean ->
             if (isGranted) {
-                Log.d("DownloadedTracksFragmentS", "Fragment downloaded tracks is destroyed")
                 viewModel.loadTracks()
             } else {
                 Toast.makeText(context, "Permission denied", Toast.LENGTH_SHORT).show()
@@ -41,9 +39,4 @@ class DownloadedTracksFragment : BaseFragment<DownloadedTracksViewModel>() {
     }
 
     override fun getPlaybackSource() = PlaybackSource.LOCAL
-
-    override fun onDestroy() {
-        Log.d("DownloadedTracksFragmentS", "Fragment downloaded tracks is destroyed")
-        super.onDestroy()
-    }
 }

@@ -1,7 +1,6 @@
 package com.example.shared_ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +10,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.example.core.constants.AppConstants
 import com.example.core.state.Empty
 import com.example.core.state.Error
 import com.example.core.state.Exception
@@ -38,8 +38,6 @@ abstract class BaseFragment<VM : BaseViewModel> : Fragment() {
         setupObservers()
         setupTrackItemListener()
         setupSearchListener()
-        Log.d("BaseFragmentS", "Init BaseFragment")
-
         return binding.root
     }
 
@@ -54,9 +52,9 @@ abstract class BaseFragment<VM : BaseViewModel> : Fragment() {
                 val playbackSource = getPlaybackSource()
                 val allTracks = ArrayList(adapter.tracks)
                 val navArgs = bundleOf(
-                    "trackId" to trackId,
-                    "playbackSource" to playbackSource.name,
-                    "allTracks" to allTracks,
+                    AppConstants.BUNDLE_TRACK_ID to trackId,
+                    AppConstants.BUNDLE_TRACK_SOURCE to playbackSource.name,
+                    AppConstants.BUNDLE_TRACKS to allTracks,
                 )
 
                 findNavController().navigate(
@@ -98,7 +96,7 @@ abstract class BaseFragment<VM : BaseViewModel> : Fragment() {
                     if (response.data.isEmpty()) {
                         Toast.makeText(
                             context,
-                            "No tracks found for your query.",
+                            getString(R.string.no_tracks_found_for_your_query),
                             Toast.LENGTH_SHORT
                         ).show()
                     }
@@ -116,7 +114,12 @@ abstract class BaseFragment<VM : BaseViewModel> : Fragment() {
                     Toast.makeText(context, response.e.message, Toast.LENGTH_SHORT).show()
                 }
 
-                is Empty -> {}
+                is Empty -> {
+                    Toast.makeText(
+                        context,
+                        getString(R.string.no_tracks), Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
         }
     }
@@ -124,9 +127,5 @@ abstract class BaseFragment<VM : BaseViewModel> : Fragment() {
     override fun onDestroy() {
         _binding = null
         super.onDestroy()
-    }
-
-    companion object {
-        private const val TAG = "BaseFragmentS"
     }
 }

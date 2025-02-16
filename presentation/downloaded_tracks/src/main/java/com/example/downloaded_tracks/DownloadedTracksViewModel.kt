@@ -1,6 +1,5 @@
 package com.example.downloaded_tracks
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.example.core.state.Loading
 import com.example.domain.usecases.GetTracksLocallyUseCase
@@ -21,7 +20,6 @@ class DownloadedTracksViewModel @Inject constructor(
     }
 
     override fun loadTracks() = viewModelScope.launch {
-        Log.d("DownloadedTracksFragmentS", "Load Data")
         _tracks.value = Loading
         _tracks.value = getTracksUseCase()
     }

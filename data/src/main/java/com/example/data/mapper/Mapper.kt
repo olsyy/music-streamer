@@ -1,7 +1,6 @@
 package com.example.data.mapper
 
 import android.net.Uri
-import android.util.Log
 import com.example.core.state.Empty
 import com.example.core.state.Error
 import com.example.core.state.Exception

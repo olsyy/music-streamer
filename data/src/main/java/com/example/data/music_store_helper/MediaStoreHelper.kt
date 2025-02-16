@@ -5,9 +5,7 @@ import android.content.Context
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
-import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.core.state.Empty
-import com.example.core.state.Error
 import com.example.core.state.Success
 import com.example.core.state.ViewState
 import com.example.domain.entities.Track
@@ -89,28 +87,32 @@ object MediaStoreHelper {
         val selection = "${MediaStore.Audio.Media._ID} = ?"
         val selectionArgs = arrayOf(trackId.toString())
 
-        context.contentResolver.query(uri, projection, selection, selectionArgs, null)?.use { cursor ->
-            if (cursor.moveToFirst()) {
-                val id = cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID))
-                val title = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE))
-                val artist = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST))
-                val duration = cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION))
-                val albumId = cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM_ID))
+        context.contentResolver.query(uri, projection, selection, selectionArgs, null)
+            ?.use { cursor ->
+                if (cursor.moveToFirst()) {
+                    val id =
+                        cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID))
+                    val title =
+                        cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE))
+                    val artist =
+                        cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST))
+                    val albumId =
+                        cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM_ID))
 
-                val coverUri = getCover(albumId)
-                val audioUri = ContentUris.withAppendedId(uri, id)
+                    val coverUri = getCover(albumId)
+                    val audioUri = ContentUris.withAppendedId(uri, id)
 
-                return Success(
-                    data = Track(
-                        id = id,
-                        title = title,
-                        artist = artist,
-                        cover = coverUri,
-                        audioSourceUrl = audioUri
+                    return Success(
+                        data = Track(
+                            id = id,
+                            title = title,
+                            artist = artist,
+                            cover = coverUri,
+                            audioSourceUrl = audioUri
+                        )
                     )
-                )
+                }
             }
-        }
         return Empty
     }
 

@@ -17,6 +17,7 @@ import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
+import com.example.core.constants.AppConstants
 import com.example.core.state.Empty
 import com.example.core.state.Error
 import com.example.core.state.Exception
@@ -27,6 +28,7 @@ import com.example.domain.entities.Track
 import com.example.playback.databinding.FragmentPlaybackBinding
 import dagger.hilt.android.AndroidEntryPoint
 
+@UnstableApi
 @AndroidEntryPoint
 class PlaybackFragment : Fragment() {
 
@@ -51,15 +53,17 @@ class PlaybackFragment : Fragment() {
         setupPlayer()
         setPlayerListener()
         setupObservers()
-        updateTrackInfo(viewModel.tracks.find { it.id == viewModel.trackId }!!)
+        viewModel.tracks.find { it.id == viewModel.trackId }?.let { updateTrackInfo(it) }
     }
 
     private fun initViewModel() {
-        val trackId = arguments?.getLong("trackId", -1L) ?: -1L
+        val trackId = arguments?.getLong(AppConstants.BUNDLE_TRACK_ID, -1L) ?: -1L
         val playbackSource =
-            arguments?.getString("playbackSource")?.let { PlaybackSource.valueOf(it) }
+            arguments?.getString(AppConstants.BUNDLE_TRACK_SOURCE)
+                ?.let { PlaybackSource.valueOf(it) }
                 ?: PlaybackSource.API
-        val allTracks = arguments?.getParcelableArrayList<Track>("allTracks") ?: emptyList()
+        val allTracks =
+            arguments?.getParcelableArrayList<Track>(AppConstants.BUNDLE_TRACKS) ?: emptyList()
         viewModel.trackId = trackId
         viewModel.tracks = allTracks.toMutableList()
         viewModel.source = playbackSource

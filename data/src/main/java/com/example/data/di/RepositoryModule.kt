@@ -7,8 +7,8 @@ import com.example.data.api.MusicApiService
 import com.example.data.api.PlaybackApiService
 import com.example.data.repository.ApiPlaybackRepositoryImpl
 import com.example.data.repository.ApiTracksRepositoryImpl
-import com.example.data.repository.DownloadedTracksRepositoryIml
 import com.example.data.repository.DownloadedPlaybackRepositoryImpl
+import com.example.data.repository.DownloadedTracksRepositoryIml
 import com.example.domain.repository.PlaybackRepository
 import com.example.domain.repository.TracksRepository
 import dagger.Module

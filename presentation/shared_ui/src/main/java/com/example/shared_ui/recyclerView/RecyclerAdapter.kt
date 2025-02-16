@@ -62,8 +62,8 @@ class RecyclerAdapter : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 
     class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
-        val trackCover = view.findViewById<ImageView>(R.id.imageView)
-        val trackTitle = view.findViewById<TextView>(R.id.textView1)
-        val trackArtist = view.findViewById<TextView>(R.id.textView2)
+        val trackCover: ImageView = view.findViewById(R.id.imageView)
+        val trackTitle: TextView = view.findViewById(R.id.textView1)
+        val trackArtist: TextView = view.findViewById(R.id.textView2)
     }
 }

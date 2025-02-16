@@ -1,6 +1,5 @@
 package com.example.api_tracks
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.example.core.state.Loading
 import com.example.domain.usecases.GetTracksRemoteUseCase
@@ -25,7 +24,6 @@ class ApiTracksViewModel @Inject constructor(
     }
 
     override fun searchTracks(query: String) = viewModelScope.launch {
-        Log.d("TAGsTracks", "searchTracksQuery: $query")
         _tracks.value = Loading
         _tracks.value = searchTracksUseCase(query)
     }
