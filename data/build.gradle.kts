@@ -59,6 +59,10 @@ dependencies {
     // OkHttp
     implementation(libs.okhttp)
 
+    //Exoplayer
+    implementation(libs.androidx.media3.exoplayer)
+    implementation(libs.androidx.media3.session)
+
     //Gson
     implementation(libs.gson)
     implementation (libs.converter.gson)

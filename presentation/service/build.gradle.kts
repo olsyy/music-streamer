@@ -1,5 +1,3 @@
-import org.gradle.kotlin.dsl.android
-
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
@@ -8,8 +6,8 @@ plugins {
 }
 
 android {
-    namespace = "com.example.presentation"
-    compileSdk = 34
+    namespace = "com.example.service"
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 24
@@ -34,44 +32,22 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
-    buildFeatures {
-        viewBinding = true
-    }
-}
-
-kapt {
-    correctErrorTypes = true
 }
 
 dependencies {
 
-    // Modules
-    implementation(project(":core"))
-    implementation(project(":domain"))
-
-    // Retrofit
-    implementation(libs.retrofit)
-
-    // Glide
-    implementation (libs.glide)
-
     // DI
     implementation(libs.hilt.android)
+    implementation(libs.androidx.activity)
     kapt(libs.hilt.android.compiler)
 
-    // Serialization
-    implementation(libs.kotlinx.serialization.json)
+    //Exoplayer
+    implementation(libs.androidx.media3.exoplayer)
+    implementation(libs.androidx.media3.session)
 
-    // Lifecycle
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
-    implementation(libs.androidx.fragment.ktx)
-
-    // UI
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
-
-    // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

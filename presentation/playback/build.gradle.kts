@@ -65,11 +65,9 @@ dependencies {
     implementation (libs.androidx.media3.session)
     implementation (libs.androidx.media)
 
-
     // DI
     implementation(libs.hilt.android)
     implementation(libs.androidx.activity)
-    implementation(libs.androidx.constraintlayout)
     kapt(libs.hilt.android.compiler)
 
     // Serialization
