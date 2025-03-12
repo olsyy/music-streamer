@@ -3,6 +3,8 @@ package com.example.service
 import android.content.Intent
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.session.MediaController
+import androidx.media3.session.MediaNotification
 import androidx.media3.session.MediaSession
 import androidx.media3.session.MediaSessionService
 import com.google.common.util.concurrent.Futures
@@ -11,7 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class PlayerNotificationService : MediaSessionService() {
+class PlaybackService : MediaSessionService() {
 
     private var mediaSession: MediaSession? = null
 
@@ -20,20 +22,16 @@ class PlayerNotificationService : MediaSessionService() {
 
     override fun onCreate() {
         super.onCreate()
-        initSession()
+        initMediaSession()
     }
 
-    private fun initSession() {
+    private fun initMediaSession() {
         mediaSession = MediaSession.Builder(this, exoPlayer)
-            .setCallback(mediaSessionCallback)
+            .setCallback(MediaSessionCallback())
             .build()
     }
 
-    override fun onGetSession(controllerInfo: MediaSession.ControllerInfo): MediaSession? =
-        mediaSession
-
-
-    private val mediaSessionCallback = object : MediaSession.Callback {
+    private inner class MediaSessionCallback : MediaSession.Callback {
         override fun onAddMediaItems(
             mediaSession: MediaSession,
             controller: MediaSession.ControllerInfo,
@@ -46,11 +44,15 @@ class PlayerNotificationService : MediaSessionService() {
         }
     }
 
+    override fun onGetSession(controllerInfo: MediaSession.ControllerInfo): MediaSession? {
+        return mediaSession
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         mediaSession?.run {
-            release()
             player.release()
+            release()
             mediaSession = null
         }
     }

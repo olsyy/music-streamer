@@ -27,6 +27,7 @@ import com.example.core.state.Success
 import com.example.domain.entities.Track
 import com.example.playback.databinding.FragmentPlaybackBinding
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @UnstableApi
 @AndroidEntryPoint
@@ -37,7 +38,8 @@ class PlaybackFragment : Fragment() {
 
     private val viewModel: PlaybackViewModel by viewModels()
 
-    private lateinit var player: ExoPlayer
+    @Inject
+    lateinit var player: ExoPlayer
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -96,7 +98,6 @@ class PlaybackFragment : Fragment() {
     }
 
     private fun setupPlayer() {
-        player = ExoPlayer.Builder(requireContext()).build()
         binding.playerView.player = player
 
         val mediaItems = viewModel.tracks.map { track ->
@@ -153,7 +154,6 @@ class PlaybackFragment : Fragment() {
     }
 
     override fun onDestroy() {
-        player.release()
         super.onDestroy()
     }
 }

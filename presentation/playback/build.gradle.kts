@@ -47,6 +47,7 @@ dependencies {
     // Modules
     implementation(project(":core"))
     implementation(project(":domain"))
+    implementation(project(":presentation:service"))
 
     // Retrofit
     implementation(libs.retrofit)
