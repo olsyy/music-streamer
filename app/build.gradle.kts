@@ -53,7 +53,7 @@ dependencies {
     implementation(project(":presentation:api_tracks"))
     implementation(project(":presentation:downloaded_tracks"))
     implementation(project(":presentation:playback"))
-    implementation(project(":presentation:service"))
+    implementation(project(":service"))
 
     // Navigation
     implementation(libs.androidx.navigation.fragment)

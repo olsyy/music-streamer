@@ -3,6 +3,7 @@ package com.example.playback
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,8 +12,6 @@ import androidx.annotation.OptIn
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.media3.common.MediaItem
-import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
 import com.bumptech.glide.Glide
@@ -25,6 +24,7 @@ import com.example.core.state.Loading
 import com.example.core.state.PlaybackSource
 import com.example.core.state.Success
 import com.example.domain.entities.Track
+import com.example.domain.playback.PlayerController
 import com.example.playback.databinding.FragmentPlaybackBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -41,6 +41,9 @@ class PlaybackFragment : Fragment() {
     @Inject
     lateinit var player: ExoPlayer
 
+    @Inject
+    lateinit var playerController: PlayerController
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -51,11 +54,17 @@ class PlaybackFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.d("PlaybackFragmentS", "onViewCreated")
         initViewModel()
-        setupPlayer()
-        setPlayerListener()
+//        setupPlayer()
+//        setPlayerListener()
         setupObservers()
         viewModel.tracks.find { it.id == viewModel.trackId }?.let { updateTrackInfo(it) }
+        val newIndex = player.currentMediaItemIndex
+        val currentTrack = viewModel.tracks[newIndex]
+
+        playerController.setPlayerListener(currentTrack) { updateTrackInfo(it) }
+        playerController.playTrack(viewModel.trackId, viewModel.tracks)
     }
 
     private fun initViewModel() {
@@ -70,6 +79,7 @@ class PlaybackFragment : Fragment() {
         viewModel.tracks = allTracks.toMutableList()
         viewModel.source = playbackSource
         viewModel.loadTrack(trackId)
+        Log.d("PlaybackFragmentS", "InitViewModel size: ${allTracks.size}")
     }
 
     @OptIn(UnstableApi::class)
@@ -97,33 +107,46 @@ class PlaybackFragment : Fragment() {
         }
     }
 
-    private fun setupPlayer() {
-        binding.playerView.player = player
+//    private fun setupPlayer() {
+//        binding.playerView.player = player
+//        if (player.isPlaying) {
+//            player.stop()
+//            player.clearMediaItems()
+//        }
+//        val mediaItems = viewModel.tracks.map { track ->
+//            MediaItem.fromUri(track.audioSourceUrl)
+//        }
+//
+//        player.setMediaItems(mediaItems)
+//
+//        val currentIndex =
+//            viewModel.tracks.indexOf(viewModel.tracks.find { it.id == viewModel.trackId })
+//
+//        Log.d("PlaybackFragmentS", "setupPlayer indx: $currentIndex size: ${viewModel.tracks.size}")
+//
+//
+//        player.seekTo(
+//            currentIndex,
+//            0
+//        )
+//
+//        player.prepare()
+//        player.play()
+//    }
 
-        val mediaItems = viewModel.tracks.map { track ->
-            MediaItem.fromUri(track.audioSourceUrl)
-        }
-
-        player.setMediaItems(mediaItems)
-
-        player.seekTo(
-            viewModel.tracks.indexOf(viewModel.tracks.find { it.id == viewModel.trackId }),
-            0
-        )
-
-        player.prepare()
-        player.play()
-    }
-
-    private fun setPlayerListener() {
-        player.addListener(object : Player.Listener {
-            override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
-                val newIndex = player.currentMediaItemIndex
-                val currentTrack = viewModel.tracks[newIndex]
-                updateTrackInfo(currentTrack)
-            }
-        })
-    }
+//    private fun setPlayerListener() {
+//        player.addListener(object : Player.Listener {
+//            override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
+//                val newIndex = player.currentMediaItemIndex
+//                Log.d(
+//                    "PlaybackFragmentS",
+//                    "setPlayerListener indx: $newIndex size: ${viewModel.tracks.size}"
+//                )
+//                val currentTrack = viewModel.tracks[newIndex]
+//                updateTrackInfo(currentTrack)
+//            }
+//        })
+//    }
 
     private fun updateTrackInfo(track: Track) {
         binding.textViewTitle.text = track.title
@@ -151,9 +174,5 @@ class PlaybackFragment : Fragment() {
                     )
                 }
             })
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
     }
 }

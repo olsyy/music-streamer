@@ -36,6 +36,8 @@ android {
 
 dependencies {
 
+    implementation(project(":domain"))
+
     // DI
     implementation(libs.hilt.android)
     implementation(libs.androidx.activity)

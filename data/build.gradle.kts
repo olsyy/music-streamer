@@ -42,6 +42,7 @@ dependencies {
     // Modules
     implementation(project(":core"))
     implementation(project(":domain"))
+    implementation(project(":service"))
 
     // Serialization
     implementation(libs.kotlinx.serialization.json)
